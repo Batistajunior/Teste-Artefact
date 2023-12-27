@@ -1,0 +1,52 @@
+# -*- coding: utf-8 -*-
+
+# Projeto Baseado em Microsserviços com Flask e Google Calendar API
+# Tecnologias Utilizadas: Python, Flask, Google Calendar API, Bootstrap
+
+# -------------------------------------------
+# Passo 1: Configuração do Ambiente
+# -------------------------------------------
+
+
+# Instalei as dependências usando o seguinte comando no terminal do VS Code:
+# pip install Flask google-auth google-auth-oauthlib google-auth-httplib2
+
+# -------------------------------------------
+# Passo 2: Configuração das Credenciais do Google
+# -------------------------------------------
+
+# 1. Criei um projeto no Google Cloud Console.
+# 2. Ativei a API do Google Calendar para o projeto.
+# 3. Criei credenciais de API (arquivo JSON) para autenticação.
+# 4. Substituir o nome do arquivo de credenciais no código Python.
+
+
+# -------------------------------------------
+# Passo 3: Desenvolvimento do Back-End (app.py)
+# -------------------------------------------
+
+# 1. Implementei as rotas para a aplicação Flask.
+# 2. Utilizei o Flask para renderizar templates HTML e servir arquivos estáticos.
+# 3. Configurei as rotas para interagir com a Google Calendar API.
+
+# -------------------------------------------
+# Passo 4: Desenvolvimento do Front-End (index.html)
+# -------------------------------------------
+
+# 1. Projetei a interface do usuário usando HTML e Bootstrap.
+# 2. Criei formulários para adicionar tarefas e botões para excluir tarefas.
+# 3. Utilizei JavaScript para realizar chamadas assíncronas para adicionar e excluir tarefas.
+
+# -------------------------------------------
+# Passo 5: Execução do Projeto
+# -------------------------------------------
+
+# 1. Executei o aplicativo Flask usando o comando no terminal:
+# python app.py
+
+# 2. Acessei o aplicativo no navegador usando o endereço http://localhost:5000.
+
+
+# testei a aplicação gerou resultado satisfatório.
+
+Obs: este desafio contém dados sensiveis de minha particularidade!!

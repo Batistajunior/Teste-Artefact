@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Lista de Tarefas</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Minha Lista de Tarefas</h1>
+
+        <form id="formTarefa">
+            <div class="mb-3">
+                <label for="titulo" class="form-label">Título:</label>
+                <input type="text" id="titulo" name="titulo" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="datetime" class="form-label">Data e Hora:</label>
+                <input type="datetime-local" id="datetime" name="datetime" class="form-control" required>
+            </div>
+
+            <button type="button" onclick="adicionarTarefa()" class="btn btn-primary">Adicionar Tarefa</button>
+        </form>
+
+        <ul id="listaTarefas" class="list-group mt-4">
+            {% for task in tasks %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{ task.start }} - {{ task.summary }}
+                <button type="button" class="btn btn-danger btn-sm float-end" onclick="excluirTarefa('{{ task.event_id }}')">Excluir</button>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function adicionarTarefa() {
+            var titulo = document.getElementById('titulo').value;
+            var datetimeInput = document.getElementById('datetime');
+            var datetimeISO = datetimeInput.value.replace('T', ' ') + ':00';
+            var datetime = new Date(datetimeISO);
+
+            fetch('/adicionar_tarefa', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    title: titulo,
+                    datetime: datetime.toISOString(),
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Tarefa adicionada com sucesso!\n' + data.message);
+                    atualizarListaTarefas();
+                } else {
+                    alert('Erro ao adicionar tarefa. Mensagem: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Erro na requisição:', error);
+            });
+        }
+
+        function excluirTarefa(eventId) {
+            fetch(`/excluir_tarefa/${eventId}`, {
+                method: 'DELETE',
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Tarefa excluída com sucesso!\n' + data.message);
+                    atualizarListaTarefas();
+                } else {
+                    alert('Erro ao excluir tarefa. Mensagem: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Erro na requisição:', error);
+            });
+        }
+
+        function atualizarListaTarefas() {
+            fetch('/')
+            .then(response => response.text())
+            .then(html => {
+                var parser = new DOMParser();
+                var doc = parser.parseFromString(html, 'text/html');
+                var listaTarefas = doc.getElementById('listaTarefas');
+                document.getElementById('listaTarefas').innerHTML = listaTarefas.innerHTML;
+            })
+            .catch(error => {
+                console.error('Erro na requisição:', error);
+            });
+        }
+    </script>
+</body>
+
+</html>
